@@ -21,4 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('notes', 'NoteController');
+Route::get('notes', 'NoteController@index');
+Route::post('notes', 'NoteController@store');
+Route::put('notes/{id}', 'NoteController@update');
+Route::delete('notes/{id}', 'NoteController@destroy');

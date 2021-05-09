@@ -19,27 +19,35 @@ class NoteController extends Controller
     /**
      * Create a note
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        // TODO
+        Note::create($request->all());
+        return redirect()->back();
     }
 
     /**
      * Update a note
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        // TODO
+        $note = Note::find($id);
+        $note->update($request->all());
+        return redirect()->back();
     }
 
     /**
      * Delete a note
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        // TODO
+        $note = Note::find($id);
+        $note->delete();
+        return redirect()->back();
     }
 }

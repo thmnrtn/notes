@@ -4850,11 +4850,131 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: {
       type: Array,
       required: true
+    }
+  },
+  data: function data() {
+    return {
+      isEditing: false,
+      model: this.initialModelData()
+    };
+  },
+  methods: {
+    /**
+     * Open the modal
+     */
+    openModal: function openModal() {
+      $('#modal').modal('show');
+    },
+
+    /**
+     * Close the modal
+     */
+    closeModal: function closeModal() {
+      $('#modal').modal('hide');
+      this.resetModel();
+      this.isEditing = false;
+    },
+
+    /**
+     * Reset the model
+     */
+    resetModel: function resetModel() {
+      this.model = this.initialModelData();
+    },
+
+    /**
+     * Get the initial model data
+     * @return Object
+     */
+    initialModelData: function initialModelData() {
+      return {
+        id: null,
+        title: null,
+        note: null
+      };
+    },
+
+    /**
+     * Populate the model and open the edit modal for the note
+     * @param note
+     */
+    editNote: function editNote(note) {
+      this.model.id = note.id;
+      this.model.title = note.title;
+      this.model.note = note.note;
+      this.isEditing = true;
+      this.openModal();
+    },
+
+    /**
+     * Create a new note
+     */
+    create: function create(data) {
+      this.$inertia.post("".concat(this.$page.props.rootUrl, "/notes"), data);
+      this.resetModel();
+      this.closeModal();
+    },
+
+    /**
+     * Update the note
+     * @param data
+     */
+    update: function update(data) {
+      data._method = 'PUT';
+      this.$inertia.post("".concat(this.$page.props.rootUrl, "/notes/") + data.id, data);
+      this.resetModel();
+      this.isEditing = false;
+      this.closeModal();
+    },
+
+    /**
+     * Delete the note
+     * @param data
+     */
+    deleteNote: function deleteNote(data) {
+      data._method = 'DELETE';
+      this.$inertia.post("".concat(this.$page.props.rootUrl, "/notes/") + data.id, data);
+      this.resetModel();
+      this.closeModal();
     }
   }
 });
@@ -43504,22 +43624,196 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary mt-3 mb-3",
+            on: {
+              click: function($event) {
+                return _vm.openModal()
+              }
+            }
+          },
+          [_vm._v("Create Note")]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
       _c(
         "div",
         { staticClass: "col-md-12" },
         _vm._l(_vm.data, function(note) {
-          return _c("div", [
+          return _c("div", { staticClass: "mb-3" }, [
             _c("h2", [_vm._v(_vm._s(note.title))]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(note.note))])
+            _c("p", [_vm._v(_vm._s(note.note))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.editNote(note)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteNote(note)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
           ])
         }),
         0
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal fade", attrs: { id: "modal" } }, [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.title,
+                    expression: "model.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "title" },
+                domProps: { value: _vm.model.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "title", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "note" } }, [_vm._v("Note")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.note,
+                    expression: "model.note"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "note", rows: "5" },
+                domProps: { value: _vm.model.note },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "note", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.closeModal()
+                  }
+                }
+              },
+              [_vm._v("Cancel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.isEditing,
+                    expression: "!isEditing"
+                  }
+                ],
+                staticClass: "btn btn-success",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    return _vm.create(_vm.model)
+                  }
+                }
+              },
+              [_vm._v("Create")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isEditing,
+                    expression: "isEditing"
+                  }
+                ],
+                staticClass: "btn btn-success",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    return _vm.update(_vm.model)
+                  }
+                }
+              },
+              [_vm._v("Update")]
+            )
+          ])
+        ])
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Create Note")])
+    ])
+  }
+]
 render._withStripped = true
 
 
