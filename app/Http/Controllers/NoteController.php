@@ -2,6 +2,7 @@
 
 use App\Note;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveNoteRequest;
 use Inertia\Inertia;
 
 class NoteController extends Controller
@@ -19,10 +20,10 @@ class NoteController extends Controller
 
     /**
      * Create a note
-     * @param Request $request
+     * @param SaveNoteRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SaveNoteRequest $request)
     {
         Note::create($request->all());
         return redirect()->back();
@@ -30,10 +31,10 @@ class NoteController extends Controller
 
     /**
      * Update a note
-     * @param Request $request
+     * @param SaveNoteRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(SaveNoteRequest $request, $id)
     {
         $note = Note::find($id);
         $note->update($request->all());
