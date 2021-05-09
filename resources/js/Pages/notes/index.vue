@@ -9,11 +9,24 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div v-for="note in data" class="mb-3">
-                    <h2>{{note.title}}</h2>
-                    <p>{{note.note}}</p>
-                    <button @click="editNote(note)" class="btn btn-sm btn-primary">Edit</button>
-                    <button @click="deleteNote(note)" class="btn btn-sm btn-danger">Delete</button>
+                <div id="notes">
+                    <div v-for="note in data" class="card mb-3">
+                        <div class="card-header">
+                            <h4 class="card-title">{{note.title}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{note.note}}</p>
+                            <div class="row">
+                                <div class="col-md-6 m-auto text-muted">
+                                    {{note.formatted_date}}
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button @click="editNote(note)" class="btn btn-sm btn-primary">Edit</button>
+                                    <button @click="deleteNote(note)" class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,3 +147,24 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+#notes {
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -ms-flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100vw;
+}
+#notes .card {
+    width: 33.3%;
+    // Add a bit of spacing around notes
+    margin: 0 10px 10px 0;
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+</style>

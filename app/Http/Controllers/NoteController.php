@@ -13,7 +13,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return Inertia::render('notes/index', ['data' => Note::all()]);
+        $notes = Note::orderBy('updated_at', 'desc')->get();
+        return Inertia::render('notes/index', ['data' => $notes]);
     }
 
     /**
