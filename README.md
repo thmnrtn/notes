@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Written in Laravel 7 to work on a PHP 7.2 server
+Written in Laravel 7 to work on a PHP 7.2 server. Uses VueJS with InertiaJS.
 
 ### Composer
 Install composer dependencies using the following command:
@@ -61,7 +61,6 @@ vendor/bin/phpunit
 ```
 
 ## Limitations
-Due to time constraints (i.e. a 3 hours limit) there are the following which are not a good as the could be:
-- The layout of the notes overflows to the right once you have more than a certain amount of notes
+Due to time constraints (i.e. a 3 hour limit) there are the following which are not as good as they could be:
+- The layout of the notes overflows to the right once you have more than a certain number of notes. This could be resolved by adding pagination
 - Validation works i.e. it won't let you save but there are no flash messages
-
